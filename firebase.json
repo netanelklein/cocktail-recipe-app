@@ -1,0 +1,44 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "cocktailian-app-2025",
+          "appId": "1:973525837714:android:71f14573ffb7e9a609834b",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "cocktailian-app-2025",
+          "configurations": {
+            "android": "1:973525837714:android:71f14573ffb7e9a609834b",
+            "ios": "1:973525837714:ios:21061c9740cbedf209834b",
+            "web": "1:973525837714:web:7ec381f9ad44b3fe09834b"
+          }
+        }
+      }
+    }
+  }
+}

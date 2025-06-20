@@ -56,17 +56,21 @@ jobs:
         fi
     
     # Test coverage reporting
+    - name: Install lcov for coverage reporting
+      run: sudo apt-get update && sudo apt-get install -y lcov
+    
     - name: Generate test coverage
       run: |
         flutter test --coverage
-        genhtml coverage/lcov.info -o coverage/html
+        if [ -f coverage/lcov.info ]; then
+          genhtml coverage/lcov.info -o coverage/html
+        else
+          echo "No coverage data generated"
+        fi
     
     - name: Upload coverage reports
       uses: actions/upload-artifact@v4
+      if: always()
       with:
         name: coverage-report
         path: coverage/
-    # - name: Generate test coverage
-    #   run: |
-    #     flutter test --coverage
-    #     genhtml coverage/lcov.info -o coverage/html

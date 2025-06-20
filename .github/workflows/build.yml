@@ -34,16 +34,17 @@ jobs:
           build/app/outputs/flutter-apk/app-debug.apk
           build/app/outputs/bundle/release/app-release.aab
     
-    # Firebase App Distribution for beta testing
-    - name: Deploy to Firebase App Distribution
-      uses: wzieba/Firebase-Distribution-Github-Action@v1
-      if: github.ref == 'refs/heads/main'
-      with:
-        appId: ${{ secrets.FIREBASE_APP_ID }}
-        serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
-        groups: beta-testers
-        file: build/app/outputs/flutter-apk/app-debug.apk
-        releaseNotes: "Automated build from commit ${{ github.sha }}"
+    # TODO: Firebase App Distribution (requires GitHub secrets setup)
+    # Uncomment when FIREBASE_APP_ID and CREDENTIAL_FILE_CONTENT secrets are added
+    # - name: Deploy to Firebase App Distribution
+    #   uses: wzieba/Firebase-Distribution-Github-Action@v1
+    #   if: github.ref == 'refs/heads/main'
+    #   with:
+    #     appId: ${{ secrets.FIREBASE_APP_ID }}
+    #     serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+    #     groups: beta-testers
+    #     file: build/app/outputs/flutter-apk/app-debug.apk
+    #     releaseNotes: "Automated build from commit ${{ github.sha }}"
     
     # Integration tests (when available)
     - name: Run integration tests

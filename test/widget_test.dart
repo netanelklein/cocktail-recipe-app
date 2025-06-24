@@ -9,21 +9,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:cocktailian/main.dart';
+import 'package:cocktailian/widget_showcase_screen.dart';
 
 void main() {
   testWidgets('Cocktailian app loads correctly', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const ProviderScope(child: CocktailianApp()));
 
-    // Verify that our app loads with the correct title.
-    expect(find.text('Welcome to Cocktailian'), findsOneWidget);
-    expect(
-      find.text('Discover cocktails based on your ingredients'),
-      findsOneWidget,
-    );
+    // Verify that our app loads with the widget showcase
+    expect(find.text('Widget Showcase'), findsOneWidget);
+    expect(find.text('Buttons'), findsOneWidget);
 
-    // Verify that the buttons are present.
-    expect(find.text('Start Mixing'), findsOneWidget);
-    expect(find.text('Browse Recipes'), findsOneWidget);
+    // Verify that the widget showcase screen is present.
+    expect(find.byType(WidgetShowcaseScreen), findsOneWidget);
   });
 }

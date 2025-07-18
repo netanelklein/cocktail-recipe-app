@@ -185,7 +185,7 @@ class _BarSearchFieldState extends State<BarSearchField> {
                 borderRadius: BorderRadius.circular(AppConstants.inputBorderRadius),
                 color: Theme.of(context).colorScheme.surfaceContainer,
                 child: Container(
-                  width: 300, // Fixed width for tests
+                  width: MediaQuery.of(context).size.width * 0.8, // Responsive width
                   constraints: const BoxConstraints(maxHeight: 200),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surfaceContainer,

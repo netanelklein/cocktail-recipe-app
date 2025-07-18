@@ -47,8 +47,7 @@ class BarLoading extends StatefulWidget {
   State<BarLoading> createState() => _BarLoadingState();
 }
 
-class _BarLoadingState extends State<BarLoading>
-    with TickerProviderStateMixin {
+class _BarLoadingState extends State<BarLoading> with TickerProviderStateMixin {
   late AnimationController _spinController;
   late AnimationController _pulseController;
   late AnimationController _shimmerController;
@@ -56,17 +55,17 @@ class _BarLoadingState extends State<BarLoading>
   @override
   void initState() {
     super.initState();
-    
+
     _spinController = AnimationController(
       duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
-    
+
     _pulseController = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
-    
+
     _shimmerController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
@@ -95,10 +94,12 @@ class _BarLoadingState extends State<BarLoading>
     _pulseController.dispose();
     _shimmerController.dispose();
     super.dispose();
-  }  @override
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     Widget loadingWidget;
     switch (widget.type) {
       case BarLoadingType.spinner:
@@ -121,8 +122,8 @@ class _BarLoadingState extends State<BarLoading>
           Text(
             widget.message!,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: widget.color ?? colorScheme.primary,
-                ),
+              color: widget.color ?? colorScheme.primary,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -134,7 +135,7 @@ class _BarLoadingState extends State<BarLoading>
 
   Widget _buildSpinner() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return RotationTransition(
       turns: _spinController,
       child: Container(
@@ -165,7 +166,7 @@ class _BarLoadingState extends State<BarLoading>
 
   Widget _buildPulse() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return AnimatedBuilder(
       animation: _pulseController,
       builder: (context, child) {
@@ -176,10 +177,12 @@ class _BarLoadingState extends State<BarLoading>
             shape: BoxShape.circle,
             gradient: RadialGradient(
               colors: [
-                (widget.color ?? colorScheme.primary)
-                    .withValues(alpha: 0.8 * _pulseController.value),
-                (widget.color ?? colorScheme.secondary)
-                    .withValues(alpha: 0.4 * _pulseController.value),
+                (widget.color ?? colorScheme.primary).withValues(
+                  alpha: 0.8 * _pulseController.value,
+                ),
+                (widget.color ?? colorScheme.secondary).withValues(
+                  alpha: 0.4 * _pulseController.value,
+                ),
                 Colors.transparent,
               ],
               stops: const [0.0, 0.7, 1.0],
@@ -202,7 +205,7 @@ class _BarLoadingState extends State<BarLoading>
 
   Widget _buildShimmer() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return AnimatedBuilder(
       animation: _shimmerController,
       builder: (context, child) {
@@ -210,7 +213,9 @@ class _BarLoadingState extends State<BarLoading>
           width: widget.size,
           height: 20,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppConstants.standardBorderRadius),
+            borderRadius: BorderRadius.circular(
+              AppConstants.standardBorderRadius,
+            ),
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
@@ -240,10 +245,10 @@ class _BarLoadingState extends State<BarLoading>
 enum BarLoadingType {
   /// Spinning circle with gradient
   spinner,
-  
+
   /// Pulsing circle with glow
   pulse,
-  
+
   /// Shimmer effect for content placeholders
   shimmer,
 }
@@ -268,7 +273,7 @@ class BarLoadingOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Stack(
       children: [
         child,
@@ -280,7 +285,9 @@ class BarLoadingOverlay extends StatelessWidget {
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: colorScheme.surfaceContainer,
-                  borderRadius: BorderRadius.circular(AppConstants.standardBorderRadius),
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.standardBorderRadius,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: colorScheme.shadow.withValues(alpha: 0.3),
@@ -289,10 +296,7 @@ class BarLoadingOverlay extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: BarLoading(
-                  type: type,
-                  message: message,
-                ),
+                child: BarLoading(type: type, message: message),
               ),
             ),
           ),

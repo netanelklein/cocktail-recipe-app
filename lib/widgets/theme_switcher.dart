@@ -20,10 +20,7 @@ class ThemeSwitcher extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Icon(
-                  Icons.palette,
-                  color: colorScheme.primary,
-                ),
+                Icon(Icons.palette, color: colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Theme Switcher',
@@ -132,12 +129,12 @@ class _ThemeChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected 
+          color: isSelected
               ? theme.colorScheme.primary.withValues(alpha: 0.8)
               : theme.colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected 
+            color: isSelected
                 ? theme.colorScheme.primary
                 : theme.colorScheme.outline.withValues(alpha: 0.3),
             width: isSelected ? 2 : 1,
@@ -155,15 +152,12 @@ class _ThemeChip extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              theme.emoji,
-              style: const TextStyle(fontSize: 16),
-            ),
+            Text(theme.emoji, style: const TextStyle(fontSize: 16)),
             const SizedBox(width: 4),
             Text(
               theme.name,
               style: TextStyle(
-                color: isSelected 
+                color: isSelected
                     ? theme.colorScheme.onPrimary
                     : theme.colorScheme.onSurface,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
@@ -205,15 +199,14 @@ class _ColorPalette extends StatelessWidget {
                 color: colorInfo.$2,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.outline.withValues(alpha: 0.3),
                 ),
               ),
             ),
             const SizedBox(height: 4),
-            Text(
-              colorInfo.$1,
-              style: Theme.of(context).textTheme.labelSmall,
-            ),
+            Text(colorInfo.$1, style: Theme.of(context).textTheme.labelSmall),
           ],
         );
       }).toList(),

@@ -132,7 +132,7 @@ void main() {
       expect(find.text('50'), findsOneWidget);
       expect(find.text('30'), findsOneWidget);
       expect(find.text('15'), findsOneWidget);
-      
+
       // "3" and "2" appear twice (count and rating level), so check for at least one
       expect(find.text('3'), findsAtLeastNWidgets(1));
       expect(find.text('2'), findsAtLeastNWidgets(1));

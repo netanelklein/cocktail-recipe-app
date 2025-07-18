@@ -19,7 +19,7 @@ class BarModal {
     Color? barrierColor,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return showGeneralDialog<T>(
       context: context,
       barrierDismissible: barrierDismissible,
@@ -30,14 +30,13 @@ class BarModal {
           child: Material(
             color: Colors.transparent,
             child: Container(
-              constraints: const BoxConstraints(
-                maxWidth: 400,
-                maxHeight: 600,
-              ),
+              constraints: const BoxConstraints(maxWidth: 400, maxHeight: 600),
               margin: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(AppConstants.standardBorderRadius),
+                borderRadius: BorderRadius.circular(
+                  AppConstants.standardBorderRadius,
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: colorScheme.shadow.withValues(alpha: 0.3),
@@ -66,17 +65,10 @@ class BarModal {
       },
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return ScaleTransition(
-          scale: Tween<double>(
-            begin: 0.7,
-            end: 1.0,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeOutBack,
-          )),
-          child: FadeTransition(
-            opacity: animation,
-            child: child,
+          scale: Tween<double>(begin: 0.7, end: 1.0).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
           ),
+          child: FadeTransition(opacity: animation, child: child),
         );
       },
       transitionDuration: const Duration(milliseconds: 300),
@@ -100,7 +92,7 @@ class BarModal {
       backgroundColor: Colors.transparent,
       builder: (context) {
         final colorScheme = Theme.of(context).colorScheme;
-        
+
         return Container(
           height: height,
           decoration: BoxDecoration(
@@ -116,10 +108,7 @@ class BarModal {
               _buildBottomSheetHandle(),
               if (title != null) _buildBottomSheetHeader(context, title),
               Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: child,
-                ),
+                child: Padding(padding: const EdgeInsets.all(16), child: child),
               ),
               if (actions != null && actions.isNotEmpty)
                 _buildBottomSheetActions(context, actions),
@@ -141,24 +130,22 @@ class BarModal {
     bool isDestructive = false,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return showDialog<bool>(
       context,
       title: title,
       child: Text(
         message,
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.bodyMedium?.copyWith(color: colorScheme.onSurfaceVariant),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(
             cancelText,
-            style: TextStyle(
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: TextStyle(color: colorScheme.onSurfaceVariant),
           ),
         ),
         Container(
@@ -167,13 +154,19 @@ class BarModal {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: isDestructive
-                  ? [colorScheme.error, colorScheme.error.withValues(alpha: 0.8)]
+                  ? [
+                      colorScheme.error,
+                      colorScheme.error.withValues(alpha: 0.8),
+                    ]
                   : [
                       confirmColor ?? colorScheme.primary,
-                      confirmColor?.withValues(alpha: 0.8) ?? colorScheme.primary.withValues(alpha: 0.8),
+                      confirmColor?.withValues(alpha: 0.8) ??
+                          colorScheme.primary.withValues(alpha: 0.8),
                     ],
             ),
-            borderRadius: BorderRadius.circular(AppConstants.standardBorderRadius),
+            borderRadius: BorderRadius.circular(
+              AppConstants.standardBorderRadius,
+            ),
           ),
           child: ElevatedButton(
             onPressed: () => Navigator.of(context).pop(true),
@@ -184,7 +177,9 @@ class BarModal {
             child: Text(
               confirmText,
               style: TextStyle(
-                color: isDestructive ? colorScheme.onError : colorScheme.onPrimary,
+                color: isDestructive
+                    ? colorScheme.onError
+                    : colorScheme.onPrimary,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -196,7 +191,7 @@ class BarModal {
 
   static Widget _buildDialogHeader(BuildContext context, String title) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -213,26 +208,26 @@ class BarModal {
             child: Text(
               title,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: colorScheme.onSurface,
-                    fontWeight: FontWeight.w600,
-                  ),
+                color: colorScheme.onSurface,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           IconButton(
             onPressed: () => Navigator.of(context).pop(),
-            icon: Icon(
-              Icons.close,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            icon: Icon(Icons.close, color: colorScheme.onSurfaceVariant),
           ),
         ],
       ),
     );
   }
 
-  static Widget _buildDialogActions(BuildContext context, List<Widget> actions) {
+  static Widget _buildDialogActions(
+    BuildContext context,
+    List<Widget> actions,
+  ) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -246,10 +241,12 @@ class BarModal {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: actions
-            .map((action) => Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: action,
-                ))
+            .map(
+              (action) => Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: action,
+              ),
+            )
             .toList(),
       ),
     );
@@ -274,7 +271,7 @@ class BarModal {
 
   static Widget _buildBottomSheetHeader(BuildContext context, String title) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
@@ -291,26 +288,26 @@ class BarModal {
             child: Text(
               title,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: colorScheme.onSurface,
-                    fontWeight: FontWeight.w600,
-                  ),
+                color: colorScheme.onSurface,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           IconButton(
             onPressed: () => Navigator.of(context).pop(),
-            icon: Icon(
-              Icons.close,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            icon: Icon(Icons.close, color: colorScheme.onSurfaceVariant),
           ),
         ],
       ),
     );
   }
 
-  static Widget _buildBottomSheetActions(BuildContext context, List<Widget> actions) {
+  static Widget _buildBottomSheetActions(
+    BuildContext context,
+    List<Widget> actions,
+  ) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -324,10 +321,12 @@ class BarModal {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: actions
-            .map((action) => Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: action,
-                ))
+            .map(
+              (action) => Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: action,
+              ),
+            )
             .toList(),
       ),
     );
@@ -352,7 +351,7 @@ class BarModalContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -360,17 +359,17 @@ class BarModalContent extends StatelessWidget {
         Text(
           title,
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: colorScheme.onSurface,
-                fontWeight: FontWeight.w600,
-              ),
+            color: colorScheme.onSurface,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         if (subtitle != null) ...[
           const SizedBox(height: 8),
           Text(
             subtitle!,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
         const SizedBox(height: 16),
@@ -380,10 +379,12 @@ class BarModalContent extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: actions!
-                .map((action) => Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: action,
-                    ))
+                .map(
+                  (action) => Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: action,
+                  ),
+                )
                 .toList(),
           ),
         ],

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 /// Custom cocktail glass icons for rating system
 class CocktailGlassIcons {
-  
   /// Martini glass icon
   static Widget martiniGlass({
     required double size,

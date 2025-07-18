@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_constants.dart';
 
 /// Cocktail card with dark bar aesthetic.
-/// 
+///
 /// Features:
 /// - Dark gradient background
 /// - Gold border on selection
@@ -38,8 +38,7 @@ class BarCard extends StatefulWidget {
   State<BarCard> createState() => _BarCardState();
 }
 
-class _BarCardState extends State<BarCard>
-    with SingleTickerProviderStateMixin {
+class _BarCardState extends State<BarCard> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   bool _isHovered = false;
@@ -51,13 +50,9 @@ class _BarCardState extends State<BarCard>
       duration: const Duration(milliseconds: AppConstants.fastAnimationMs),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.02,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.02).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+    );
   }
 
   @override
@@ -69,7 +64,7 @@ class _BarCardState extends State<BarCard>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return AnimatedBuilder(
       animation: _scaleAnimation,
       builder: (context, child) {
@@ -81,10 +76,7 @@ class _BarCardState extends State<BarCard>
             child: GestureDetector(
               onTap: widget.onTap,
               child: Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 6,
-                ),
+                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
@@ -98,14 +90,13 @@ class _BarCardState extends State<BarCard>
                     AppConstants.standardBorderRadius,
                   ),
                   border: widget.isSelected
-                      ? Border.all(
-                          color: colorScheme.primary,
-                          width: 2,
-                        )
+                      ? Border.all(color: colorScheme.primary, width: 2)
                       : null,
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.3),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.shadow.withValues(alpha: 0.3),
                       blurRadius: _isHovered ? 12 : 6,
                       offset: Offset(0, _isHovered ? 6 : 3),
                     ),
@@ -190,16 +181,16 @@ class _BarCardState extends State<BarCard>
 
   Widget _buildHeader() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Row(
       children: [
         Expanded(
           child: Text(
             widget.title,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.onSurface,
-                ),
+              fontWeight: FontWeight.w600,
+              color: colorScheme.onSurface,
+            ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
@@ -214,12 +205,12 @@ class _BarCardState extends State<BarCard>
 
   Widget _buildSubtitle() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Text(
       widget.subtitle!,
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: colorScheme.onSurface.withValues(alpha: 0.7),
-          ),
+        color: colorScheme.onSurface.withValues(alpha: 0.7),
+      ),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
     );
@@ -227,7 +218,7 @@ class _BarCardState extends State<BarCard>
 
   Widget _buildRating() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Row(
       children: [
         ...List.generate(5, (index) {
@@ -243,9 +234,9 @@ class _BarCardState extends State<BarCard>
         Text(
           widget.rating!.toStringAsFixed(1),
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: colorScheme.primary,
-                fontWeight: FontWeight.w500,
-              ),
+            color: colorScheme.primary,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ],
     );
@@ -253,7 +244,7 @@ class _BarCardState extends State<BarCard>
 
   Widget _buildMissingIngredients() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     if (widget.missingIngredients == 0) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -264,18 +255,14 @@ class _BarCardState extends State<BarCard>
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.check_circle,
-              size: 16,
-              color: colorScheme.onTertiary,
-            ),
+            Icon(Icons.check_circle, size: 16, color: colorScheme.onTertiary),
             const SizedBox(width: 4),
             Text(
               'Can Make Now',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onTertiary,
-                    fontWeight: FontWeight.w500,
-                  ),
+                color: colorScheme.onTertiary,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
@@ -290,18 +277,14 @@ class _BarCardState extends State<BarCard>
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.remove_circle,
-              size: 16,
-              color: colorScheme.onError,
-            ),
+            Icon(Icons.remove_circle, size: 16, color: colorScheme.onError),
             const SizedBox(width: 4),
             Text(
               '${widget.missingIngredients} missing',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onError,
-                    fontWeight: FontWeight.w500,
-                  ),
+                color: colorScheme.onError,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
@@ -311,29 +294,31 @@ class _BarCardState extends State<BarCard>
 
   Widget _buildTags() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Wrap(
       spacing: 6,
       runSpacing: 6,
       children: widget.tags!
           .take(3)
-          .map((tag) => Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: colorScheme.primary.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: colorScheme.primary.withValues(alpha: 0.5),
-                  ),
+          .map(
+            (tag) => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: colorScheme.primary.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: colorScheme.primary.withValues(alpha: 0.5),
                 ),
-                child: Text(
-                  tag,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: colorScheme.primary,
-                        fontSize: 10,
-                      ),
+              ),
+              child: Text(
+                tag,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: colorScheme.primary,
+                  fontSize: 10,
                 ),
-              ))
+              ),
+            ),
+          )
           .toList(),
     );
   }

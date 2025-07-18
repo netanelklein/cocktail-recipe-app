@@ -71,4 +71,52 @@ class FirebaseService {
   Reference storageRef([String? path]) {
     return path != null ? storage.ref(path) : storage.ref();
   }
+
+  /// Test Firestore security rules.
+  /// Returns true if basic read operations work as expected.
+  Future<bool> testSecurityRules() async {
+    try {
+      debugPrint('Testing Firestore security rules...');
+
+      // Test reading cocktails collection (should work)
+      final cocktailsQuery = await firestore
+          .collection('cocktails')
+          .limit(1)
+          .get();
+      debugPrint(
+        '✅ Can read cocktails collection (${cocktailsQuery.docs.length} docs)',
+      );
+
+      // Test reading ingredients collection (should work)
+      final ingredientsQuery = await firestore
+          .collection('ingredients')
+          .limit(1)
+          .get();
+      debugPrint(
+        '✅ Can read ingredients collection (${ingredientsQuery.docs.length} docs)',
+      );
+
+      // Test reading user inventory (should work)
+      final userInventoryDoc = await firestore
+          .collection('user_inventories')
+          .doc('test-user')
+          .get();
+      debugPrint(
+        '✅ Can read user inventory (exists: ${userInventoryDoc.exists})',
+      );
+
+      // Test writing to user inventory (should work)
+      await firestore.collection('user_inventories').doc('test-user').set({
+        'ingredientIds': ['gin', 'tonic'],
+        'lastUpdated': FieldValue.serverTimestamp(),
+      });
+      debugPrint('✅ Can write to user inventory');
+
+      debugPrint('🎉 Security rules test passed!');
+      return true;
+    } catch (e) {
+      debugPrint('❌ Security rules test failed: $e');
+      return false;
+    }
+  }
 }

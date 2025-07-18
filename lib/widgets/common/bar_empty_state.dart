@@ -34,9 +34,10 @@ class BarEmptyState extends StatelessWidget {
     this.onAction,
     this.customIcon,
     this.iconColor,
-  })  : icon = Icons.local_bar,
-        title = 'No Cocktails Found',
-        message = 'Try adjusting your filters or search terms to find more cocktails.';
+  }) : icon = Icons.local_bar,
+       title = 'No Cocktails Found',
+       message =
+           'Try adjusting your filters or search terms to find more cocktails.';
 
   const BarEmptyState.noIngredients({
     super.key,
@@ -44,9 +45,10 @@ class BarEmptyState extends StatelessWidget {
     this.onAction,
     this.customIcon,
     this.iconColor,
-  })  : icon = Icons.inventory_2,
-        title = 'No Ingredients Yet',
-        message = 'Add ingredients to your inventory to discover cocktails you can make.';
+  }) : icon = Icons.inventory_2,
+       title = 'No Ingredients Yet',
+       message =
+           'Add ingredients to your inventory to discover cocktails you can make.';
 
   const BarEmptyState.noFavorites({
     super.key,
@@ -54,9 +56,9 @@ class BarEmptyState extends StatelessWidget {
     this.onAction,
     this.customIcon,
     this.iconColor,
-  })  : icon = Icons.favorite_border,
-        title = 'No Favorites',
-        message = 'Mark cocktails as favorites to see them here.';
+  }) : icon = Icons.favorite_border,
+       title = 'No Favorites',
+       message = 'Mark cocktails as favorites to see them here.';
 
   const BarEmptyState.noResults({
     super.key,
@@ -64,9 +66,10 @@ class BarEmptyState extends StatelessWidget {
     this.onAction,
     this.customIcon,
     this.iconColor,
-  })  : icon = Icons.search_off,
-        title = 'No Results',
-        message = 'Your search didn\'t match any cocktails. Try different keywords.';
+  }) : icon = Icons.search_off,
+       title = 'No Results',
+       message =
+           'Your search didn\'t match any cocktails. Try different keywords.';
 
   const BarEmptyState.offline({
     super.key,
@@ -74,9 +77,9 @@ class BarEmptyState extends StatelessWidget {
     this.onAction,
     this.customIcon,
     this.iconColor,
-  })  : icon = Icons.wifi_off,
-        title = 'You\'re Offline',
-        message = 'Check your internet connection and try again.';
+  }) : icon = Icons.wifi_off,
+       title = 'You\'re Offline',
+       message = 'Check your internet connection and try again.';
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +108,7 @@ class BarEmptyState extends StatelessWidget {
 
   Widget _buildIcon(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     if (customIcon != null) {
       return customIcon!;
     }
@@ -124,35 +127,31 @@ class BarEmptyState extends StatelessWidget {
           stops: const [0.0, 0.7, 1.0],
         ),
       ),
-      child: Icon(
-        icon,
-        size: 40,
-        color: iconColor ?? colorScheme.primary,
-      ),
+      child: Icon(icon, size: 40, color: iconColor ?? colorScheme.primary),
     );
   }
 
   Widget _buildTitle(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Text(
       title,
       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            color: colorScheme.onSurface,
-            fontWeight: FontWeight.w600,
-          ),
+        color: colorScheme.onSurface,
+        fontWeight: FontWeight.w600,
+      ),
       textAlign: TextAlign.center,
     );
   }
 
   Widget _buildMessage(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Text(
       message,
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: colorScheme.onSurface.withValues(alpha: 0.7),
-          ),
+        color: colorScheme.onSurface.withValues(alpha: 0.7),
+      ),
       textAlign: TextAlign.center,
       maxLines: 3,
     );
@@ -160,7 +159,7 @@ class BarEmptyState extends StatelessWidget {
 
   Widget _buildActionButton(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -187,7 +186,9 @@ class BarEmptyState extends StatelessWidget {
           shadowColor: Colors.transparent,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppConstants.standardBorderRadius),
+            borderRadius: BorderRadius.circular(
+              AppConstants.standardBorderRadius,
+            ),
           ),
         ),
         child: Text(
@@ -221,15 +222,15 @@ class BarEmptyStateCompact extends StatelessWidget {
     super.key,
     this.iconColor,
     this.iconSize = 32,
-  })  : icon = Icons.inbox,
-        message = 'No items to display';
+  }) : icon = Icons.inbox,
+       message = 'No items to display';
 
   const BarEmptyStateCompact.noResults({
     super.key,
     this.iconColor,
     this.iconSize = 32,
-  })  : icon = Icons.search_off,
-        message = 'No results found';
+  }) : icon = Icons.search_off,
+       message = 'No results found';
 
   @override
   Widget build(BuildContext context) {
@@ -247,8 +248,10 @@ class BarEmptyStateCompact extends StatelessWidget {
           Text(
             message,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-                ),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.6),
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -294,21 +297,17 @@ class _BarEmptyStateAnimatedState extends State<BarEmptyStateAnimated>
       vsync: this,
     );
 
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
 
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.5),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOutBack,
-    ));
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.5), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeOutBack,
+          ),
+        );
 
     _animationController.forward();
   }

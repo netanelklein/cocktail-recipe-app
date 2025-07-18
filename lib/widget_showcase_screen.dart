@@ -10,7 +10,8 @@ class WidgetShowcaseScreen extends ConsumerStatefulWidget {
   const WidgetShowcaseScreen({super.key});
 
   @override
-  ConsumerState<WidgetShowcaseScreen> createState() => _WidgetShowcaseScreenState();
+  ConsumerState<WidgetShowcaseScreen> createState() =>
+      _WidgetShowcaseScreenState();
 }
 
 class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
@@ -23,9 +24,7 @@ class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Widget Showcase'),
-      ),
+      appBar: AppBar(title: const Text('Widget Showcase')),
       body: BarLoadingOverlay(
         isLoading: _isLoading,
         message: 'Loading widgets...',
@@ -59,9 +58,9 @@ class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
           child: Text(
             title,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold,
-                ),
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         content,
@@ -230,10 +229,7 @@ class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
               style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
             ),
             const SizedBox(width: 16),
-            const BarRating.readOnly(
-              rating: 4.3,
-              showLabel: true,
-            ),
+            const BarRating.readOnly(rating: 4.3, showLabel: true),
           ],
         ),
         const SizedBox(height: 16),
@@ -244,10 +240,7 @@ class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
               style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
             ),
             const SizedBox(width: 16),
-            const BarRatingCompact(
-              rating: 4.7,
-              reviewCount: 156,
-            ),
+            const BarRatingCompact(rating: 4.7, reviewCount: 156),
           ],
         ),
         const SizedBox(height: 16),
@@ -269,13 +262,7 @@ class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
         BarRatingSummary(
           averageRating: 4.2,
           totalReviews: 234,
-          ratingBreakdown: const {
-            5: 120,
-            4: 78,
-            3: 25,
-            2: 8,
-            1: 3,
-          },
+          ratingBreakdown: const {5: 120, 4: 78, 3: 25, 2: 8, 1: 3},
           onViewAllReviews: () => _showSnackBar('View all reviews'),
         ),
       ],
@@ -292,7 +279,9 @@ class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
               children: [
                 Text(
                   'Spinner',
-                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 const BarLoading.spinner(),
@@ -302,7 +291,9 @@ class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
               children: [
                 Text(
                   'Pulse',
-                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 const BarLoading.pulse(),
@@ -393,18 +384,13 @@ class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
 
   void _showSnackBar(String message) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(
-          message,
-          style: TextStyle(color: colorScheme.onPrimary),
-        ),
+        content: Text(message, style: TextStyle(color: colorScheme.onPrimary)),
         backgroundColor: colorScheme.primary,
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(16),
       ),
     );
@@ -442,12 +428,28 @@ class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: Icon(Icons.local_bar, color: Theme.of(context).colorScheme.secondary),
-              title: Text('Option 1', style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+              leading: Icon(
+                Icons.local_bar,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              title: Text(
+                'Option 1',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
             ),
             ListTile(
-              leading: Icon(Icons.wine_bar, color: Theme.of(context).colorScheme.secondary),
-              title: Text('Option 2', style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+              leading: Icon(
+                Icons.wine_bar,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              title: Text(
+                'Option 2',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
             ),
           ],
         ),
@@ -465,7 +467,8 @@ class _WidgetShowcaseScreenState extends ConsumerState<WidgetShowcaseScreen> {
     BarModal.showConfirmation(
       context,
       title: 'Delete Cocktail',
-      message: 'Are you sure you want to delete this cocktail? This action cannot be undone.',
+      message:
+          'Are you sure you want to delete this cocktail? This action cannot be undone.',
       confirmText: 'Delete',
       isDestructive: true,
     ).then((confirmed) {

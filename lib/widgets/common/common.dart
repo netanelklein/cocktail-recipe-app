@@ -1,5 +1,5 @@
 // Common widgets used throughout the Cocktailian app.
-// 
+//
 // This library exports all common UI components with the dark bar aesthetic.
 
 export 'bar_button.dart';

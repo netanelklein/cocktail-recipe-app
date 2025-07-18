@@ -45,8 +45,8 @@ class BarRating extends StatefulWidget {
     this.showLabel = true,
     this.label,
     this.allowHalfRating = true,
-  })  : readOnly = true,
-        onRatingChanged = null;
+  }) : readOnly = true,
+       onRatingChanged = null;
 
   const BarRating.interactive({
     super.key,
@@ -80,13 +80,9 @@ class _BarRatingState extends State<BarRating>
       duration: const Duration(milliseconds: AppConstants.fastAnimationMs),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.2,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
   }
 
   @override
@@ -140,8 +136,12 @@ class _BarRatingState extends State<BarRating>
                   _getStarIcon(starValue),
                   size: widget.size,
                   color: isActive
-                      ? (widget.activeColor ?? Theme.of(context).colorScheme.primary)
-                      : (widget.inactiveColor ?? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
+                      ? (widget.activeColor ??
+                            Theme.of(context).colorScheme.primary)
+                      : (widget.inactiveColor ??
+                            Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withValues(alpha: 0.3)),
                 ),
               ),
             );
@@ -159,9 +159,9 @@ class _BarRatingState extends State<BarRating>
     return Text(
       widget.label ?? '${displayRating.toStringAsFixed(1)}/5',
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.w500,
-          ),
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
 
@@ -183,7 +183,7 @@ class _BarRatingState extends State<BarRating>
     if (_hoveredIndex >= 0 && !widget.readOnly) {
       return starValue <= _hoveredIndex + 1;
     }
-    
+
     if (widget.allowHalfRating) {
       return _currentRating >= starValue - 0.5;
     } else {
@@ -197,7 +197,7 @@ class _BarRatingState extends State<BarRating>
     setState(() {
       _currentRating = rating;
     });
-    
+
     widget.onRatingChanged?.call(rating);
     _animationController.forward().then((_) {
       _animationController.reverse();
@@ -210,7 +210,7 @@ class _BarRatingState extends State<BarRating>
     setState(() {
       _hoveredIndex = index;
     });
-    
+
     if (_hoveredIndex != index) {
       _animationController.forward();
     }
@@ -222,7 +222,7 @@ class _BarRatingState extends State<BarRating>
     setState(() {
       _hoveredIndex = -1;
     });
-    
+
     _animationController.reverse();
   }
 }
@@ -245,30 +245,26 @@ class BarRatingCompact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          Icons.star,
-          size: size,
-          color: color ?? colorScheme.primary,
-        ),
+        Icon(Icons.star, size: size, color: color ?? colorScheme.primary),
         const SizedBox(width: 4),
         Text(
           rating.toStringAsFixed(1),
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: colorScheme.onSurface,
-                fontWeight: FontWeight.w600,
-              ),
+            color: colorScheme.onSurface,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         if (reviewCount > 0) ...[
           const SizedBox(width: 4),
           Text(
             '($reviewCount)',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurface.withValues(alpha: 0.7),
-                ),
+              color: colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
           ),
         ],
       ],
@@ -294,15 +290,13 @@ class BarRatingSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(AppConstants.standardBorderRadius),
-        border: Border.all(
-          color: colorScheme.outline.withValues(alpha: 0.3),
-        ),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,19 +309,16 @@ class BarRatingSummary extends StatelessWidget {
                   Text(
                     averageRating.toStringAsFixed(1),
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                          color: colorScheme.onSurface,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      color: colorScheme.onSurface,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  BarRating.readOnly(
-                    rating: averageRating,
-                    size: 20,
-                  ),
+                  BarRating.readOnly(rating: averageRating, size: 20),
                   Text(
                     '$totalReviews reviews',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ],
               ),
@@ -351,10 +342,10 @@ class BarRatingSummary extends StatelessWidget {
                 style: TextButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppConstants.standardBorderRadius),
-                    side: BorderSide(
-                      color: colorScheme.primary,
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.standardBorderRadius,
                     ),
+                    side: BorderSide(color: colorScheme.primary),
                   ),
                 ),
                 child: Text(
@@ -384,23 +375,17 @@ class BarRatingSummary extends StatelessWidget {
           Text(
             '$stars',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurface.withValues(alpha: 0.7),
-                ),
+              color: colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
           ),
           const SizedBox(width: 8),
-          Icon(
-            Icons.star,
-            size: 12,
-            color: colorScheme.primary,
-          ),
+          Icon(Icons.star, size: 12, color: colorScheme.primary),
           const SizedBox(width: 8),
           Expanded(
             child: LinearProgressIndicator(
               value: percentage,
               backgroundColor: colorScheme.onSurface.withValues(alpha: 0.2),
-              valueColor: AlwaysStoppedAnimation<Color>(
-                colorScheme.primary,
-              ),
+              valueColor: AlwaysStoppedAnimation<Color>(colorScheme.primary),
             ),
           ),
           const SizedBox(width: 8),
@@ -409,8 +394,8 @@ class BarRatingSummary extends StatelessWidget {
             child: Text(
               '$count',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurface.withValues(alpha: 0.7),
-                  ),
+                color: colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
               textAlign: TextAlign.end,
             ),
           ),

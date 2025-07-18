@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'core/themes/bar_theme.dart';
+import 'providers/theme_provider.dart';
 import 'data/services/firebase_service.dart';
+import 'widget_showcase_screen.dart';
 
 void main() async {
   // Ensure Flutter binding is initialized
@@ -14,15 +15,17 @@ void main() async {
   runApp(const ProviderScope(child: CocktailianApp()));
 }
 
-class CocktailianApp extends StatelessWidget {
+class CocktailianApp extends ConsumerWidget {
   const CocktailianApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentTheme = ref.watch(themeProvider);
+    
     return MaterialApp(
       title: 'Cocktailian',
-      theme: BarTheme.darkBarTheme,
-      home: const CocktailianHomePage(),
+      theme: currentTheme.themeData,
+      home: const WidgetShowcaseScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -84,8 +87,8 @@ class _CocktailianHomePageState extends State<CocktailianHomePage> {
                 Icon(
                   _firebaseConnected ? Icons.check_circle : Icons.error,
                   color: _firebaseConnected
-                      ? BarTheme.availableIngredient
-                      : BarTheme.missingIngredient,
+                      ? Theme.of(context).colorScheme.tertiary
+                      : Theme.of(context).colorScheme.error,
                 ),
                 const SizedBox(width: 8),
                 Text(
@@ -94,8 +97,8 @@ class _CocktailianHomePageState extends State<CocktailianHomePage> {
                       : 'Firebase Connection Failed',
                   style: TextStyle(
                     color: _firebaseConnected
-                        ? BarTheme.availableIngredient
-                        : BarTheme.missingIngredient,
+                        ? Theme.of(context).colorScheme.tertiary
+                        : Theme.of(context).colorScheme.error,
                   ),
                 ),
               ],

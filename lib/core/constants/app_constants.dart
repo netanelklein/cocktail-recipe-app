@@ -32,7 +32,12 @@ class AppConstants {
   static const double minTouchTarget = 44.0;
 
   // Border Radius
-  static const double standardBorderRadius = 12.0;
+  static const double standardBorderRadius =
+      20.0; // For cards, chips, and general components
+  static const double buttonBorderRadius =
+      30.0; // For buttons - much more rounded
+  static const double inputBorderRadius =
+      30.0; // For text inputs and form fields - very rounded
 
   // Performance Targets
   static const int maxStartupTimeMs = 3000;

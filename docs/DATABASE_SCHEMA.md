@@ -7,8 +7,9 @@ This document defines the complete Firestore database structure for the Cocktail
 ```
 cocktailian/
 ├── categories/              # Ingredient and cocktail categories
-├── ingredients/             # Base ingredients (no embedded recipes)
-├── recipes/                 # All recipes (cocktails, ingredients, techniques)
+├── ingredients/             # Base ingredients with optional recipe links
+├── cocktails/               # Cocktail metadata and information
+├── recipes/                 # Recipe instructions (cocktails, ingredients, techniques)
 ├── users/                   # User profiles
 ├── user_inventories/        # Personal ingredient inventories
 └── reviews/                 # Cocktail reviews and ratings (Phase 2+)
@@ -63,16 +64,78 @@ ingredients/{ingredientId} {
 }
 ```
 
-### 3. `recipes` Collection
+### 3. `cocktails` Collection
 
-**Purpose**: All recipes (cocktails, ingredients, techniques) with ratio-based system
+**Purpose**: Cocktail metadata and information (separate from recipe instructions)
+
+```javascript
+cocktails/{cocktailId} {
+  id: string,                    // Document ID
+  name: string,                  // "Negroni", "Old Fashioned"
+  categoryId: string,            // Reference to categories collection
+  description: string,           // "Classic Italian aperitif cocktail"
+
+  // Recipe relationships
+  canonicalRecipeId: string,     // The "standard" or most recognized version
+  alternateRecipeIds: string[],  // Other valid recipe variations
+
+  // Cocktail metadata
+  tags: string[],                // ["bitter", "classic", "aperitif"]
+  glassware: string,             // "rocks", "coupe", "highball"
+  imageUrl?: string,             // Cocktail image URL
+
+  // Historical/cultural information
+  history?: string,              // "Created in Florence in 1919..."
+  origin?: string,               // "Italy", "New Orleans"
+
+  // Aggregated rating (from all recipe variations)
+  averageRating: number,         // Calculated average (0-5)
+  ratingCount: number,           // Total ratings across all recipes
+
+  // User submission fields
+  status: "approved" | "pending" | "rejected", // Moderation status
+  submittedBy?: string,          // userId if user-submitted
+  moderationNotes?: string,      // Admin notes for moderation
+
+  // Metadata
+  createdAt: timestamp,
+  updatedAt: timestamp,
+  createdBy: "admin" | string    // "admin" or userId for user-submitted
+}
+```
+
+### 4. `recipes` Collection
+
+**Purpose**: Recipe instructions (cocktails, ingredients, techniques) with ratio-based system
 
 ```javascript
 recipes/{recipeId} {
   id: string,                    // Document ID
-  name: string,                  // "My Perfect Negroni", "Rich Demerara Syrup"
+  name: string,                  // "Classic Negroni Recipe", "Simple Syrup Recipe"
   type: "cocktail" | "ingredient" | "technique", // Recipe type
-  categoryId: string,            // Reference to categories collection
+
+  // Relationship fields
+  cocktailId?: string,           // Reference to cocktails collection (for cocktail recipes)
+  ingredientId?: string,         // Reference to ingredients collection (for ingredient recipes)
+
+  // Recipe classification and relationships
+  style: "classic" | "modern" | "variation" | "riff" | "personal", // Recipe style
+  inspirationRecipeId?: string,  // Recipe that inspired this one
+  relatedRecipeIds?: string[],   // Other related recipes
+
+  // Attribution system
+  attribution?: {
+    type: "book" | "video" | "bar" | "bartender" | "website" | "magazine" | "original",
+    source: string,              // "Death & Co", "Steve the Bartender"
+    author?: string,             // "Phil Ward", "Martin Cate"
+    year?: number,               // 2014
+    page?: number,               // 156 (for books)
+    url?: string,                // YouTube URL, website link
+    isbn?: string,               // For books
+    notes?: string,              // "Adapted from original recipe"
+    displayText: string,         // "Recipe by Steve the Bartender"
+    linkText?: string            // "Watch on YouTube"
+  }
 
   // Ratio-based ingredient system
   baseUnit: string,              // "ml", "oz", "cl" - primary unit
@@ -90,22 +153,13 @@ recipes/{recipeId} {
   difficulty: 1 | 2 | 3 | 4 | 5, // Difficulty level
   prepTimeMinutes: number,
   description: string,           // Recipe description
-  imageUrl?: string,             // Recipe image URL
-  tags: string[],                // ["whiskey", "stirred", "classic"]
-
-  // Cocktail-specific fields
-  glassware?: string,            // "rocks", "coupe", "highball"
-  variations?: string[],         // Array of related recipe IDs
-  baseRecipeId?: string,         // If this is a variation of another
-  variationType?: "riff" | "substitution" | "strength" | "garnish",
 
   // Ingredient recipe-specific fields
-  ingredientId?: string,         // Reference to ingredient this recipe makes
   yieldAmount?: string,          // "1.5"
   yieldUnit?: string,            // "cups"
   shelfLife?: string,            // "1 month refrigerated"
 
-  // Rating system
+  // Rating system (individual recipe ratings)
   averageRating: number,         // Calculated average (0-5)
   ratingCount: number,           // Number of ratings
 
@@ -121,7 +175,7 @@ recipes/{recipeId} {
 }
 ```
 
-### 4. `users` Collection
+### 5. `users` Collection
 
 **Purpose**: User profiles and preferences
 
@@ -189,12 +243,14 @@ reviews/{reviewId} {
 
 ### Primary Relationships
 
-- `recipes.categoryId` → `categories.id`
-- `recipes.ingredients[].ingredientId` → `ingredients.id`
+- `cocktails.categoryId` → `categories.id`
+- `cocktails.canonicalRecipeId` → `recipes.id`
+- `cocktails.alternateRecipeIds[]` → `recipes.id`
+- `recipes.cocktailId` → `cocktails.id` (for cocktail recipes)
 - `recipes.ingredientId` → `ingredients.id` (for ingredient recipes)
-- `recipes.baseRecipeId` → `recipes.id` (for variations)
-- `recipes.variations[]` → `recipes.id` (related recipes)
+- `recipes.ingredients[].ingredientId` → `ingredients.id`
 - `ingredients.categoryId` → `categories.id`
+- `ingredients.recipeId` → `recipes.id` (optional, for ingredients with recipes)
 - `user_inventories.userId` → `users.id`
 - `user_inventories.ingredientIds[]` → `ingredients.id`
 - `reviews.recipeId` → `recipes.id`

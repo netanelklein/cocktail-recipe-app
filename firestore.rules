@@ -13,6 +13,16 @@ service cloud.firestore {
       allow write: if false;
     }
     
+    // Recipes collection - Public read, admin write for Phase 1
+    match /recipes/{recipeId} {
+      // Anyone can read recipes
+      allow read: if true;
+      
+      // Only allow writes from admin for Phase 1 (data seeding)
+      // Later phases will add user-generated content rules
+      allow write: if false;
+    }
+    
     // Ingredients collection - Public read, admin write for Phase 1
     match /ingredients/{ingredientId} {
       // Anyone can read ingredients

@@ -18,7 +18,7 @@ void main() {
       // Check if the widget is rendered
       expect(find.byType(BarTextField), findsOneWidget);
       expect(find.byType(TextFormField), findsOneWidget);
-      
+
       // Check for the label text within the RichText
       expect(find.byType(RichText), findsAtLeastNWidgets(1));
     });
@@ -92,7 +92,9 @@ void main() {
       );
 
       // Verify the BarTextField has the expected maxLines
-      final barTextField = tester.widget<BarTextField>(find.byType(BarTextField));
+      final barTextField = tester.widget<BarTextField>(
+        find.byType(BarTextField),
+      );
       expect(barTextField.maxLines, equals(3));
     });
 
@@ -108,7 +110,9 @@ void main() {
       );
 
       // Verify the BarTextField has the expected maxLength
-      final barTextField = tester.widget<BarTextField>(find.byType(BarTextField));
+      final barTextField = tester.widget<BarTextField>(
+        find.byType(BarTextField),
+      );
       expect(barTextField.maxLength, equals(50));
     });
 
@@ -124,7 +128,9 @@ void main() {
       );
 
       // Verify the BarTextField has the expected obscureText setting
-      final barTextField = tester.widget<BarTextField>(find.byType(BarTextField));
+      final barTextField = tester.widget<BarTextField>(
+        find.byType(BarTextField),
+      );
       expect(barTextField.obscureText, isTrue);
     });
 

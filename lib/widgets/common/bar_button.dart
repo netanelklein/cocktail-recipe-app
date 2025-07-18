@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_constants.dart';
 
 /// Button styles following the dark bar aesthetic.
-/// 
+///
 /// Provides three button variants:
 /// - Primary: Gold gradient with shadows for main actions
-/// - Secondary: Gold outline for secondary actions  
+/// - Secondary: Gold outline for secondary actions
 /// - Tertiary: Copper text for subtle actions
 class BarButton extends StatelessWidget {
   final String text;
@@ -65,12 +65,15 @@ class BarButton extends StatelessWidget {
 
   Widget _buildElevatedButton(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Container(
       width: width,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [colorScheme.primary, colorScheme.primary.withValues(alpha: 0.8)],
+          colors: [
+            colorScheme.primary,
+            colorScheme.primary.withValues(alpha: 0.8),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -94,7 +97,9 @@ class BarButton extends StatelessWidget {
             AppConstants.minTouchTarget,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppConstants.buttonBorderRadius),
+            borderRadius: BorderRadius.circular(
+              AppConstants.buttonBorderRadius,
+            ),
           ),
         ),
         child: _buildButtonContent(),
@@ -104,7 +109,7 @@ class BarButton extends StatelessWidget {
 
   Widget _buildOutlinedButton(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return SizedBox(
       width: width,
       child: OutlinedButton(
@@ -117,7 +122,9 @@ class BarButton extends StatelessWidget {
             AppConstants.minTouchTarget,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppConstants.buttonBorderRadius),
+            borderRadius: BorderRadius.circular(
+              AppConstants.buttonBorderRadius,
+            ),
           ),
         ),
         child: _buildButtonContent(),
@@ -127,7 +134,7 @@ class BarButton extends StatelessWidget {
 
   Widget _buildTextButton(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return SizedBox(
       width: width,
       child: TextButton(
@@ -156,11 +163,7 @@ class BarButton extends StatelessWidget {
     if (icon != null) {
       return Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 20),
-          const SizedBox(width: 8),
-          Text(text),
-        ],
+        children: [Icon(icon, size: 20), const SizedBox(width: 8), Text(text)],
       );
     }
 
@@ -168,8 +171,4 @@ class BarButton extends StatelessWidget {
   }
 }
 
-enum BarButtonType {
-  primary,
-  secondary,
-  tertiary,
-}
+enum BarButtonType { primary, secondary, tertiary }

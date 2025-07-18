@@ -22,12 +22,12 @@ class ThemeNotifier extends StateNotifier<CocktailThemeData> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final savedThemeName = prefs.getString(_themeKey);
-      
+
       if (savedThemeName != null) {
         final theme = CocktailThemes.availableThemes
             .where((theme) => theme.name == savedThemeName)
             .firstOrNull;
-        
+
         if (theme != null) {
           state = theme;
         }
@@ -51,7 +51,8 @@ class ThemeNotifier extends StateNotifier<CocktailThemeData> {
   /// Get the next theme in the list (for quick switching)
   CocktailThemeData getNextTheme() {
     final currentIndex = CocktailThemes.availableThemes.indexOf(state);
-    final nextIndex = (currentIndex + 1) % CocktailThemes.availableThemes.length;
+    final nextIndex =
+        (currentIndex + 1) % CocktailThemes.availableThemes.length;
     return CocktailThemes.availableThemes[nextIndex];
   }
 

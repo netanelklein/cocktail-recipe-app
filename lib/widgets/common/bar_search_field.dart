@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_constants.dart';
 
 /// Search field with dark bar aesthetic and autocomplete functionality.
-/// 
+///
 /// Features:
 /// - Dark background with gold focus
 /// - Glass effect with subtle shadows
@@ -91,7 +91,8 @@ class _BarSearchFieldState extends State<BarSearchField> {
         decoration: InputDecoration(
           hintText: widget.hintText ?? 'Search...',
           labelText: widget.labelText,
-          prefixIcon: widget.prefixIcon ??
+          prefixIcon:
+              widget.prefixIcon ??
               Icon(
                 Icons.search,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -117,8 +118,12 @@ class _BarSearchFieldState extends State<BarSearchField> {
               width: 2,
             ),
           ),
-          hintStyle: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
-          labelStyle: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+          hintStyle: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+          labelStyle: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
       ),
     );
@@ -142,7 +147,7 @@ class _BarSearchFieldState extends State<BarSearchField> {
 
   void _onTextChanged(String value) {
     widget.onChanged?.call(value);
-    
+
     if (widget.suggestions != null && widget.showSuggestions) {
       _updateSuggestions(value);
     }
@@ -156,8 +161,10 @@ class _BarSearchFieldState extends State<BarSearchField> {
 
     setState(() {
       _filteredSuggestions = widget.suggestions!
-          .where((suggestion) =>
-              suggestion.toLowerCase().contains(query.toLowerCase()))
+          .where(
+            (suggestion) =>
+                suggestion.toLowerCase().contains(query.toLowerCase()),
+          )
           .take(5)
           .toList();
     });
@@ -182,14 +189,20 @@ class _BarSearchFieldState extends State<BarSearchField> {
             builder: (context, constraints) {
               return Material(
                 elevation: 8,
-                borderRadius: BorderRadius.circular(AppConstants.inputBorderRadius),
+                borderRadius: BorderRadius.circular(
+                  AppConstants.inputBorderRadius,
+                ),
                 color: Theme.of(context).colorScheme.surfaceContainer,
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.8, // Responsive width
+                  width:
+                      MediaQuery.of(context).size.width *
+                      0.8, // Responsive width
                   constraints: const BoxConstraints(maxHeight: 200),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surfaceContainer,
-                    borderRadius: BorderRadius.circular(AppConstants.inputBorderRadius),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.inputBorderRadius,
+                    ),
                     border: Border.all(
                       color: Theme.of(context).colorScheme.outline,
                     ),
@@ -204,7 +217,9 @@ class _BarSearchFieldState extends State<BarSearchField> {
                         dense: true,
                         title: Text(
                           suggestion,
-                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                         ),
                         leading: Icon(
                           Icons.search,
@@ -214,7 +229,9 @@ class _BarSearchFieldState extends State<BarSearchField> {
                         onTap: () {
                           _selectSuggestion(suggestion);
                         },
-                        hoverColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                        hoverColor: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.1),
                       );
                     },
                   ),

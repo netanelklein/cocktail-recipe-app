@@ -109,7 +109,7 @@ void main() {
       await tester.enterText(find.byType(TextFormField), 'search term');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pump();
-      
+
       // Wait for any pending timers to complete
       await tester.pump(const Duration(milliseconds: 300));
 

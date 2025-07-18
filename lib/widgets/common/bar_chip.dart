@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_constants.dart';
 
 /// Ingredient chip with copper/bronze gradient and glow effects.
-/// 
+///
 /// Features:
 /// - Copper/bronze gradient backgrounds
 /// - Hover effects with glow
@@ -45,9 +45,9 @@ class BarChip extends StatefulWidget {
     this.isSelected = false,
     this.onTap,
     this.icon,
-  })  : type = BarChipType.category,
-        isAvailable = true,
-        onDeleted = null;
+  }) : type = BarChipType.category,
+       isAvailable = true,
+       onDeleted = null;
 
   const BarChip.filter({
     super.key,
@@ -56,15 +56,14 @@ class BarChip extends StatefulWidget {
     this.onTap,
     this.onDeleted,
     this.icon,
-  })  : type = BarChipType.filter,
-        isAvailable = true;
+  }) : type = BarChipType.filter,
+       isAvailable = true;
 
   @override
   State<BarChip> createState() => _BarChipState();
 }
 
-class _BarChipState extends State<BarChip>
-    with SingleTickerProviderStateMixin {
+class _BarChipState extends State<BarChip> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _glowAnimation;
@@ -77,20 +76,12 @@ class _BarChipState extends State<BarChip>
       duration: const Duration(milliseconds: AppConstants.fastAnimationMs),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.05,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOut,
-    ));
-    _glowAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+    );
+    _glowAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+    );
   }
 
   @override
@@ -130,13 +121,17 @@ class _BarChipState extends State<BarChip>
                   boxShadow: [
                     BoxShadow(
                       color: _getGlowColor().withValues(
-                        alpha: (0.3 * _glowAnimation.value) + (_isHovered ? 0.1 : 0.0),
+                        alpha:
+                            (0.3 * _glowAnimation.value) +
+                            (_isHovered ? 0.1 : 0.0),
                       ),
                       blurRadius: 8,
                       spreadRadius: 2,
                     ),
                     BoxShadow(
-                      color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.2),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.shadow.withValues(alpha: 0.2),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
@@ -146,20 +141,18 @@ class _BarChipState extends State<BarChip>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (widget.icon != null) ...[
-                      Icon(
-                        widget.icon,
-                        size: 16,
-                        color: _getTextColor(),
-                      ),
+                      Icon(widget.icon, size: 16, color: _getTextColor()),
                       const SizedBox(width: 6),
                     ],
-                    if (!widget.isAvailable && widget.type == BarChipType.ingredient)
+                    if (!widget.isAvailable &&
+                        widget.type == BarChipType.ingredient)
                       Icon(
                         Icons.remove_circle,
                         size: 16,
                         color: _getTextColor(),
                       ),
-                    if (!widget.isAvailable && widget.type == BarChipType.ingredient)
+                    if (!widget.isAvailable &&
+                        widget.type == BarChipType.ingredient)
                       const SizedBox(width: 6),
                     Flexible(
                       child: Text(
@@ -195,7 +188,7 @@ class _BarChipState extends State<BarChip>
 
   LinearGradient _getGradient() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     if (!widget.isAvailable && widget.type == BarChipType.ingredient) {
       // Missing ingredient - error gradient
       return LinearGradient(
@@ -208,7 +201,10 @@ class _BarChipState extends State<BarChip>
     if (widget.isSelected) {
       // Selected - primary gradient
       return LinearGradient(
-        colors: [colorScheme.primary, colorScheme.primary.withValues(alpha: 0.8)],
+        colors: [
+          colorScheme.primary,
+          colorScheme.primary.withValues(alpha: 0.8),
+        ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
@@ -218,21 +214,30 @@ class _BarChipState extends State<BarChip>
       case BarChipType.ingredient:
         // Available ingredient - secondary gradient
         return LinearGradient(
-          colors: [colorScheme.secondary, colorScheme.secondary.withValues(alpha: 0.8)],
+          colors: [
+            colorScheme.secondary,
+            colorScheme.secondary.withValues(alpha: 0.8),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         );
       case BarChipType.category:
         // Category - tertiary gradient
         return LinearGradient(
-          colors: [colorScheme.tertiary, colorScheme.tertiary.withValues(alpha: 0.8)],
+          colors: [
+            colorScheme.tertiary,
+            colorScheme.tertiary.withValues(alpha: 0.8),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         );
       case BarChipType.filter:
         // Filter - surface gradient
         return LinearGradient(
-          colors: [colorScheme.surfaceContainer, colorScheme.surfaceContainerHighest],
+          colors: [
+            colorScheme.surfaceContainer,
+            colorScheme.surfaceContainerHighest,
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         );
@@ -241,7 +246,7 @@ class _BarChipState extends State<BarChip>
 
   Color _getGlowColor() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     if (!widget.isAvailable && widget.type == BarChipType.ingredient) {
       return colorScheme.error;
     }
@@ -253,20 +258,20 @@ class _BarChipState extends State<BarChip>
 
   Color _getTextColor() {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     if (widget.type == BarChipType.filter && !widget.isSelected) {
       return colorScheme.onSurface;
     }
-    
+
     if (widget.isSelected) {
       return colorScheme.onPrimary;
     }
-    
+
     // For ingredient and category chips, use appropriate contrast color
     if (!widget.isAvailable && widget.type == BarChipType.ingredient) {
       return colorScheme.onError;
     }
-    
+
     return colorScheme.onSecondary;
   }
 
@@ -283,8 +288,4 @@ class _BarChipState extends State<BarChip>
   }
 }
 
-enum BarChipType {
-  ingredient,
-  category,
-  filter,
-}
+enum BarChipType { ingredient, category, filter }

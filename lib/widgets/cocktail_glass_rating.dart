@@ -38,8 +38,8 @@ class CocktailGlassRating extends StatefulWidget {
     this.showLabel = true,
     this.label,
     this.glassType = CocktailGlassType.martini,
-  })  : readOnly = true,
-        onRatingChanged = null;
+  }) : readOnly = true,
+       onRatingChanged = null;
 
   const CocktailGlassRating.interactive({
     super.key,
@@ -73,13 +73,9 @@ class _CocktailGlassRatingState extends State<CocktailGlassRating>
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.3,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.3).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
   }
 
   @override
@@ -101,11 +97,14 @@ class _CocktailGlassRatingState extends State<CocktailGlassRating>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ...List.generate(widget.maxRating, (index) => _buildGlass(index, colorScheme)),
+        ...List.generate(
+          widget.maxRating,
+          (index) => _buildGlass(index, colorScheme),
+        ),
         if (widget.showLabel) ...[
           const SizedBox(width: 8),
           _buildLabel(context),
@@ -120,7 +119,9 @@ class _CocktailGlassRatingState extends State<CocktailGlassRating>
     final isHovered = _hoveredIndex >= index && !widget.readOnly;
 
     return GestureDetector(
-      onTap: widget.readOnly ? null : () => _onGlassTapped(glassValue.toDouble()),
+      onTap: widget.readOnly
+          ? null
+          : () => _onGlassTapped(glassValue.toDouble()),
       child: MouseRegion(
         onEnter: widget.readOnly ? null : (_) => _onGlassHover(index),
         onExit: widget.readOnly ? null : (_) => _onGlassExit(),
@@ -134,7 +135,8 @@ class _CocktailGlassRatingState extends State<CocktailGlassRating>
                 child: _buildGlassIcon(
                   isActive,
                   widget.activeColor ?? colorScheme.primary,
-                  widget.inactiveColor ?? colorScheme.onSurface.withValues(alpha: 0.3),
+                  widget.inactiveColor ??
+                      colorScheme.onSurface.withValues(alpha: 0.3),
                 ),
               ),
             );
@@ -146,7 +148,7 @@ class _CocktailGlassRatingState extends State<CocktailGlassRating>
 
   Widget _buildGlassIcon(bool filled, Color activeColor, Color inactiveColor) {
     final color = filled ? activeColor : inactiveColor;
-    
+
     switch (widget.glassType) {
       case CocktailGlassType.martini:
         return CocktailGlassIcons.martiniGlass(
@@ -183,9 +185,9 @@ class _CocktailGlassRatingState extends State<CocktailGlassRating>
     return Text(
       widget.label ?? '${displayRating.toStringAsFixed(1)}/${widget.maxRating}',
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-            fontWeight: FontWeight.w500,
-          ),
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
 
@@ -195,9 +197,9 @@ class _CocktailGlassRatingState extends State<CocktailGlassRating>
     setState(() {
       _currentRating = rating;
     });
-    
+
     widget.onRatingChanged?.call(rating);
-    
+
     // Trigger animation
     _animationController.forward().then((_) {
       _animationController.reverse();
@@ -206,32 +208,27 @@ class _CocktailGlassRatingState extends State<CocktailGlassRating>
 
   void _onGlassHover(int index) {
     if (widget.readOnly) return;
-    
+
     setState(() {
       _hoveredIndex = index;
     });
-    
+
     _animationController.forward();
   }
 
   void _onGlassExit() {
     if (widget.readOnly) return;
-    
+
     setState(() {
       _hoveredIndex = -1;
     });
-    
+
     _animationController.reverse();
   }
 }
 
 /// Different types of cocktail glasses for rating
-enum CocktailGlassType {
-  martini,
-  rocks,
-  wine,
-  shot,
-}
+enum CocktailGlassType { martini, rocks, wine, shot }
 
 /// Extension to get display names for glass types
 extension CocktailGlassTypeExtension on CocktailGlassType {
